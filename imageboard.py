@@ -88,11 +88,11 @@ class ImageBoard:
 
     ''' Get the value at row and column '''
     def get(self, row, column):
-        return self.board[row][column]
+        return self.board[row, column]
 
     ''' Set the value at row and column '''
     def set(self, row, column, value):
-        self.board[row][column] = value
+        self.board[row, column] = value
 
     ''' Swaps the two elements '''
     def move(self, r1, c1, r2, c2):
@@ -141,6 +141,18 @@ class ImageBoard:
                 string += f'{get_color_escape(0xFF, 0x00, 0x00)} {str(hex(item))}'
             string += "\n"
         return string
+
+    ''' Update the image board's board with the given board '''
+    def supply_board(self, matrix):
+        self.rows = len(matrix)
+        self.columns = len(matrix[0])
+        list_version = []
+        for row in matrix:
+            for color in row:
+                list_version.append(color)
+        self.board = np.array(list_version).astype('int')
+        np.random.shuffle(self.board)
+        self.board = self.board.reshape(self.rows, self.columns)
 
 
 if __name__ == "__main__":

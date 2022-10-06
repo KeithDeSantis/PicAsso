@@ -4,31 +4,35 @@ import old_files.ga as ga
 import sys
 import os
 from imageprocessing import *
-from sorting import *
+from expansiveSorter import *
 
 if __name__ == "__main__":
-    runtime = sys.argv[1]
+
     covers = os.listdir('images/')
     if ".DS_Store" in covers:
         covers.remove('.DS_Store')
     imProc = ImageProcessor(covers)
     imProc.get_all_colors()
-    hillClimb = HillClimber(ImageBoard([int(x, base=16) for x in imProc.colors]), runtime)
 
-    hillClimb.run()
+   #! Expansive Sort
+    es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors]), imProc)
+    best_board = es.sort()
 
-    '''
-    grid = hillClimb.image_board.board
-    name_grid = []
+   #! Hill Climbing
+   #runtime = sys.argv[1]
+    #hillClimb = HillClimber(ImageBoard([int(x, base=16) for x in imProc.colors]), runtime)
+    #best_board = hillClimb.run()
+
+    grid = best_board.board
+    name_grid = [] # list in order of rows 0, 1, 2 but as one list
     for r_index, row in enumerate(grid):
-        name_grid.append([])
         for c_index, color in enumerate(row):
-            name_grid[r_index].append(imProc.get_image_name_from_color(hex(color)))
-    print(name_grid)
-    '''
+            name_grid.append(imProc.get_image_name_from_color(hex(color)))
+    imProc.rearrange(name_grid)
+    imProc.resize()
+    imProc.create_collage(best_board)
 
-    write_rgb_values(hillClimb.image_board.board, hillClimb.image_board.columns, imProc)
 
-    os.system("python3 testColors.py")
-
-    pass
+    #! Color Testing
+    #write_rgb_values(hillClimb.image_board.board, hillClimb.image_board.columns, imProc)
+    #os.system("python3 testColors.py")

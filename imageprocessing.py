@@ -10,7 +10,12 @@ import scipy.misc
 import scipy.cluster
 import warnings
 import os
+from imageboard import *
 
+#! Class that handles image processing and maintains parallel lists of:
+#! image paths
+#! image objects
+#! image dominant color hexes
 class ImageProcessor():
 
     def __init__(self, image_paths):
@@ -30,11 +35,15 @@ class ImageProcessor():
             if area < minimum_area:
                 minimum_area = area
                 self.min_dimensions = pic.size
-        for im in self.images:
-            im.resize((self.min_dimensions))
+        self.resize()
         pass
 
-        ''' Get the dominant color in an image. Takes in an image object '''
+    ''' Resize all images '''
+    def resize(self):
+        for index in range(len(self.images)):
+            self.images[index] = self.images[index].resize((self.min_dimensions))
+    
+    ''' Get the dominant color in an image. Takes in an image object '''
     def get_main_color(self, im):
         NUM_CLUSTERS = 5
         ar = np.asarray(im)
@@ -55,9 +64,9 @@ class ImageProcessor():
         self.colors = []
         for image in self.images:
             path = self.image_paths[self.images.index(image)]
-            #!print("Determining dominant color of image: " + path + "...")
+            print("Determining dominant color of image: " + path + "...")
             self.colors.append(self.get_main_color(image))
-            #!print(str(self.colors[-1]) + " : " + path)
+            print(str(self.colors[-1]) + " : " + path)
         return self.colors
 
     def get_image_name_from_color(self, color):
@@ -83,6 +92,24 @@ class ImageProcessor():
         self.colors = new_color_array
         self.image_paths = new_image_order
         self.images = [Image.open("images/" + impath) for impath in self.image_paths]
+
+    ''' Stitch together images in order of imageboard '''
+    def create_collage(self, image_board):
+        rows = image_board.rows
+        columns = image_board.columns
+        ind_width = self.min_dimensions[0]
+        ind_height = self.min_dimensions[1]
+        width = self.min_dimensions[0] * columns
+        height = self.min_dimensions[1] * rows
+
+        collage = Image.new('RGB', (width, height))
+
+        for row in range(rows):
+            for col in range(columns):
+                collage.paste(im=self.images[self.colors.index(str(hex(image_board.get(row,col))))], box=(col*ind_height,row*ind_width))
+
+        collage.save('./collage.jpeg')
+
 
 def hex_to_rgb(value):
     value = value.lstrip('0x')

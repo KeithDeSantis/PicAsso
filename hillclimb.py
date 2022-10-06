@@ -42,7 +42,7 @@ class HillClimber:
             else:
                 # Then no move was an improvement
                 if (old_max_fitness < self.image_board.fitness):
-                    #!print(f"Local Maximum #{number_new_maxes} Found of fitness {self.image_board.fitness} > {old_max_fitness}, resetting...")
+                    print(f"Local Maximum #{number_new_maxes} Found of fitness {self.image_board.fitness} > {old_max_fitness}, resetting...")
                     old_max_fitness = self.image_board.fitness
                     number_new_maxes += 1
                 self.image_board.shuffle()
