@@ -2,11 +2,11 @@ from PIL import Image
 import os
 from imageboard import find_shape
 
-image_paths = os.listdir('images/')
+image_paths = os.listdir('images_main/')
 if ".DS_Store" in image_paths:
     image_paths.remove('.DS_Store')
 
-images = [Image.open("images/" + impath) for impath in image_paths]
+images = [Image.open("images_main/" + impath) for impath in image_paths]
 
 min_dimensions = 0,0
 minimum_area = 999999999999999999999999999999999999999

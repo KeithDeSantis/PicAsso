@@ -20,7 +20,7 @@ class ImageProcessor():
         self.image_paths = image_paths
 
         # Get all images as objects
-        self.images = [Image.open("images/" + impath) for impath in image_paths]
+        self.images = [Image.open("images_main/" + impath) for impath in image_paths]
         self.colors = []
 
         # Resize all images
@@ -44,7 +44,10 @@ class ImageProcessor():
         NUM_CLUSTERS = 5
         ar = np.asarray(im)
         shape = ar.shape
-        ar = ar.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
+        try:
+            ar = ar.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
+        except:
+            raise
         codes, dist = scipy.cluster.vq.kmeans(ar, NUM_CLUSTERS)
         vecs, dist = scipy.cluster.vq.vq(ar, codes)         # assign codes
         counts, bins = scipy.histogram(vecs, len(codes))    # count occurrences
@@ -61,7 +64,10 @@ class ImageProcessor():
         for image in self.images:
             path = self.image_paths[self.images.index(image)]
             print("Determining dominant color of image: " + path + "...")
-            self.colors.append(self.get_main_color(image))
+            try:
+                self.colors.append(self.get_main_color(image))
+            except:
+                print("Image sized poorly...")
             print(str(self.colors[-1]) + " : " + path)
         return self.colors
 
@@ -87,7 +93,7 @@ class ImageProcessor():
         
         self.colors = new_color_array
         self.image_paths = new_image_order
-        self.images = [Image.open("images/" + impath) for impath in self.image_paths]
+        self.images = [Image.open("images_main/" + impath) for impath in self.image_paths]
 
     ''' Stitch together images in order of imageboard '''
     def create_collage(self, image_board):
@@ -137,7 +143,7 @@ if __name__ == "__main__":
     
     
     '''
-    covers = os.listdir('images/')
+    covers = os.listdir('images_main/')
     covers.remove('.DS_Store')
     imProc = ImageProcessor(covers)
     f = open("./rgb_values.txt", 'w')
