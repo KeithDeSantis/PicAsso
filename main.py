@@ -17,6 +17,7 @@ if __name__ == "__main__":
     boards = []
     # Get a bunch of random starting covers and pick the one that gives the best fitness
     for color in (imProc.colors):
+        print("Color: " + str(color))
         es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors]), imProc, color)
         boards.append(es.sort())
     fitnesses = [b.calculate_fitness() for b in boards]
