@@ -35,7 +35,7 @@ if __name__ == "__main__":
     fitnesses = [b.calculate_fitness() for b in boards]
     min_index = fitnesses.index(max(fitnesses))
     best_board = boards[min_index]
-    print(best_board.rows,best_board.columns)
+    print("Rows: " + str(best_board.rows) + '\n' + "Columns: " + best_board.columns)
 
    #! Hill Climbing
     #runtime = sys.argv[1]
