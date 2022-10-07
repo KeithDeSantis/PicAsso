@@ -3,6 +3,7 @@ from imageboard import ImageBoard
 import os
 from imageprocessing import *
 from expansiveSorter import *
+import sys
 
 if __name__ == "__main__":
 
@@ -17,7 +18,7 @@ if __name__ == "__main__":
     best_board = es.sort()
 
    #! Hill Climbing
-   #runtime = sys.argv[1]
+    #runtime = sys.argv[1]
     #hillClimb = HillClimber(ImageBoard([int(x, base=16) for x in imProc.colors]), runtime)
     #best_board = hillClimb.run()
 
