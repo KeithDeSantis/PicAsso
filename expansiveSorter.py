@@ -7,7 +7,8 @@ import math
 
 class ExpansiveSorter:
 
-    def __init__(self, image_board, image_processor):
+    def __init__(self, image_board, image_processor, starting_color):
+        starting_color = int(starting_color,16)
         self.image_board = image_board
         self.image_processor = image_processor
         self.unused_colors = copy.deepcopy(self.image_board.initial_pool)
@@ -17,7 +18,7 @@ class ExpansiveSorter:
         self.sorted_board = ImageBoard([16777216]*self.columns*self.rows)
 
         # set the starting image to a random one
-        starting_color = image_board.random_element()[2]
+        #starting_color = image_board.random_element()[2]
         self.sorted_board.set(0, 0, starting_color)
         self.unused_colors.remove(starting_color)
 
