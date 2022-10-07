@@ -1,6 +1,7 @@
 from imageboard import *
 import copy
 import random
+import math
 
 class ExpansiveSorter:
 
