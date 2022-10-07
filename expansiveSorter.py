@@ -3,6 +3,8 @@ import copy
 import random
 import math
 
+# TODO noticed sometimes duplicating images...
+
 class ExpansiveSorter:
 
     def __init__(self, image_board, image_processor):
@@ -12,7 +14,7 @@ class ExpansiveSorter:
         self.rows = image_board.rows
         self.columns = image_board.columns
         # Sorted Board Starts as an Empty Image Board. Use numuber one above hex max for color (6 digit hex assumption)
-        self.sorted_board = ImageBoard([0]*self.columns*self.rows)
+        self.sorted_board = ImageBoard([16777216]*self.columns*self.rows)
 
         # set the starting image to a random one
         starting_color = image_board.random_element()[2]
@@ -29,7 +31,7 @@ class ExpansiveSorter:
             new_r = row + direction[0]
             new_c = col + direction[1]
             # make sure it is in the bounds
-            if new_r >= 0 and new_r < self.rows and new_c >= 0 and new_c < self.columns and self.sorted_board.get(new_r, new_c) == 0:
+            if new_r >= 0 and new_r < self.rows and new_c >= 0 and new_c < self.columns and self.sorted_board.get(new_r, new_c) == 16777216:
                 neighbor = (new_r, new_c)
                 neighbors.append(neighbor)
         return neighbors
@@ -62,6 +64,17 @@ class ExpansiveSorter:
     ''' Find the closest color, and return it '''
     #! DOES NOT REMOVE IT FROM UNUSED_COLORS
     def next_closest(self, current_coords):
+ 
+        '''
+        count = 0
+        for row in range(self.rows):
+            for col in range(self.columns):
+                if (self.sorted_board.get(row,col) == 16777216):
+                    count += 1
+        print(count==len(self.unused_colors))
+        print('Number unfilled squares: ' + str(count))
+        print('Number unused colors: ' + str(len(self.unused_colors)))
+        '''
 
         # Get the color at the current space
         current_color = self.sorted_board.get([current_coords[0]], [current_coords[1]])
