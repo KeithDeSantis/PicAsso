@@ -4,8 +4,14 @@ import os
 from imageprocessing import *
 from expansiveSorter import *
 import sys
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 
 if __name__ == "__main__":
+
+    f = open('tokens.txt', 'r')
+    TOKEN = f.readline()
+    os.system(f'curl -X "GET" "https://api.spotify.com/v1/me/tracks" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer {TOKEN}" > songs.json')
 
     covers = os.listdir('images/')
     if ".DS_Store" in covers:
