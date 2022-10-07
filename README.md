@@ -10,7 +10,7 @@ I tried multiple methods to sort the images into color clusters, mainly trying t
 
 At the moment the code is configured to run Expansive Sorting as I was most please with those results. The original intention with the program was to create a collage of my favorite albums, but it can be used on any set of images.
 
-Has capabilites to download album art of all of a user's liked songs, given a config.py file is provided with the following constants:
+Has capabilites to download album art of all of a user's liked songs, given a `config.py` file is provided with the following constants:
 
 * `CLIENT`: The client token of an application made through Spotify for Developers
 * `CLIENT_SECRET`: The corresponding secret token
