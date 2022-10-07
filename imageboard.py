@@ -62,13 +62,19 @@ class ImageBoard:
                  initial_pool, # the initial pool of pictures TODO gonna leave these as just hex colors for now
                  move_function=move_normal, # the function used for mutation
                  fitness_function=neighbor_based_fitness, # the function used to determine fitness
+                 r=None,
+                 c=None
                  ):
         self.totalPictures = len(initial_pool)
         self.board = np.array(initial_pool).astype('int')
         np.random.shuffle(self.board)
-        shape = find_shape(self.totalPictures)
-        self.rows = int(shape[0])
-        self.columns = int(shape[1])
+        if r is None or c is None:
+            shape = find_shape(self.totalPictures)
+            self.rows = int(shape[0])
+            self.columns = int(shape[1])
+        else:
+            self.rows = r
+            self.columns = c
         self.board = self.board.reshape(self.rows, self.columns)
         self.initial_pool = initial_pool
         self.move_function = move_function

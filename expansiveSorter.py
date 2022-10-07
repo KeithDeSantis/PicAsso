@@ -15,7 +15,7 @@ class ExpansiveSorter:
         self.rows = image_board.rows
         self.columns = image_board.columns
         # Sorted Board Starts as an Empty Image Board. Use numuber one above hex max for color (6 digit hex assumption)
-        self.sorted_board = ImageBoard([99999999]*self.columns*self.rows)
+        self.sorted_board = ImageBoard([99999999]*self.columns*self.rows, r=self.rows, c=self.columns)
 
         # set the starting image to a random one
         #starting_color = image_board.random_element()[2]
@@ -32,9 +32,10 @@ class ExpansiveSorter:
             new_r = row + direction[0]
             new_c = col + direction[1]
             # make sure it is in the bounds
-            if new_r >= 0 and new_r < self.rows and new_c >= 0 and new_c < self.columns and self.sorted_board.get(new_r, new_c) == 99999999:
-                neighbor = (new_r, new_c)
-                neighbors.append(neighbor)
+            if new_r >= 0 and new_r < self.rows and new_c >= 0 and new_c < self.columns:
+                if self.sorted_board.get(new_r, new_c) == 99999999:
+                    neighbor = (new_r, new_c)
+                    neighbors.append(neighbor)
         return neighbors
 
     ''' Sort the hex color values expansively '''
