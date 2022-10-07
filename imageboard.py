@@ -1,11 +1,6 @@
-from audioop import findfactor
-from email.mime import image
-from functools import reduce, total_ordering
-from turtle import pensize
 import random
 import math
 import numpy as np
-import copy
 
 NEIGHBORING_DIRECTIONS = [
     #(-1,-1), # Up Left 

@@ -1,7 +1,5 @@
 from hillclimb import HillClimber
 from imageboard import ImageBoard
-import old_files.ga as ga
-import sys
 import os
 from imageprocessing import *
 from expansiveSorter import *

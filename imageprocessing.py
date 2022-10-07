@@ -1,15 +1,11 @@
 from __future__ import print_function
-from ast import main
 import binascii
-from hashlib import new
-import struct
 from PIL import Image
 import numpy as np
 import scipy
 import scipy.misc
 import scipy.cluster
 import warnings
-import os
 from imageboard import *
 
 #! Class that handles image processing and maintains parallel lists of:
