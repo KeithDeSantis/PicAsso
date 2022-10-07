@@ -5,7 +5,7 @@ A side-project I've been working on that loosely organizea images by their domin
 
 I tried multiple methods to sort the images into color clusters, mainly trying to use some AI skills I'd learned, including:
 
-* `Genetic Algorithms`
+* `Genetic Algorithms` (no longer included)
 * `Hill Climbing with Random Restarts`
 * `Expansive Sorting`
 
