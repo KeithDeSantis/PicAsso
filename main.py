@@ -14,8 +14,14 @@ if __name__ == "__main__":
     imProc.get_all_colors()
 
    #! Expansive Sort
-    es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors]), imProc)
-    best_board = es.sort()
+    boards = []
+    # Get a bunch of random starting covers and pick the one that gives the best fitness
+    for color in (imProc.colors):
+        es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors]), imProc)
+        boards.append(es.sort())
+    fitnesses = [b.calculate_fitness() for b in boards]
+    min_index = fitnesses.index(max(fitnesses))
+    best_board = boards[min_index]
 
    #! Hill Climbing
     #runtime = sys.argv[1]
