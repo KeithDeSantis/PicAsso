@@ -1,4 +1,4 @@
-# PicAsso: ```Picture Assorting Assistant``` 
+# PicAsso: `Picture Assorting Assistant`
 
 A side-project I've been working on that loosely organizea images by their dominant color.
 
