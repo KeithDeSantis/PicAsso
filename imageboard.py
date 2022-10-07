@@ -8,20 +8,20 @@ import numpy as np
 import copy
 
 NEIGHBORING_DIRECTIONS = [
-    (-1,-1), # Up Left 
+    #(-1,-1), # Up Left 
     (-1,0), # Up 
-    (-1,1), # Up Right
+    #(-1,1), # Up Right
     (0,-1), # Left
     (0,1), # Right
-    (1,-1), # Down Left
-    (1,0), # Down
-    (1,1) # Down Right
+    #(1,-1), # Down Left
+    #(1,1), # Down Right
+    (1,0) # Down
     ]
 
 ''' Find the squarest factors of a number, to determine the shape of the matrix '''
 def find_shape(number):
     factors = []
-    for i in range(1, math.ceil((number**(0.5)))):
+    for i in range(1, math.ceil((number**(0.5)))+1):
        if number % i == 0:
            factors.append((i, (number/i)))
     shape = factors[0]
