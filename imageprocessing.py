@@ -113,6 +113,7 @@ class ImageProcessor():
 
         for row in range(rows):
             for col in range(columns):
+                #TODO here might be the duplication issue
                 collage.paste(im=self.images[self.colors.index(str(hex(image_board.get(row,col))))], box=(col*ind_height,row*ind_width))
 
         collage.save('./collage.jpeg')
