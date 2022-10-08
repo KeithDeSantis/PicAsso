@@ -33,14 +33,13 @@ if __name__ == "__main__":
     boards = []
     # Get a bunch of random starting covers and pick the one that gives the best fitness
     for color in (imProc.colors):
-        print("Color: " + str(color))
+        print("Testing with starting color: " + str(color))
         # If you want a specific rows and columns replace r and c here
         es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors], r=None, c=None), imProc, color)
         boards.append(es.sort())
     fitnesses = [b.calculate_fitness() for b in boards]
     min_index = fitnesses.index(max(fitnesses))
     best_board = boards[min_index]
-    print("Rows: " + str(best_board.rows) + '\n' + "Columns: " + str(best_board.columns))
 
    #! Hill Climbing
     #runtime = sys.argv[1]
@@ -52,10 +51,11 @@ if __name__ == "__main__":
     for r_index, row in enumerate(grid):
         for c_index, color in enumerate(row):
             # here we duplicate images unless we pass in a blacklist of images we've used already
-            # TODO still duplicating some specific covers for some reason
             name_grid.append(imProc.get_image_name_from_color(hex(color), blacklist=name_grid))
     imProc.rearrange(name_grid)
     imProc.resize()
+    print(f"Rows: {str(best_board.rows)}\nColumns: {str(best_board.columns)}")
+    print(f"Individual image dimesions: {imProc.min_dimensions}")
     imProc.create_collage(best_board)
 
 

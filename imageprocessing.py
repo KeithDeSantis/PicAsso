@@ -7,6 +7,7 @@ import scipy.misc
 import scipy.cluster
 import warnings
 from imageboard import *
+import math
 
 #! Class that handles image processing and maintains parallel lists of:
 #! image paths
@@ -28,7 +29,8 @@ class ImageProcessor():
         minimum_area = 999999999999999999999999999999999999999
         for pic in self.images:
             area = pic.size[0]*pic.size[1]
-            if area < minimum_area:
+            # ensure we're only doing squares
+            if area < minimum_area and math.sqrt(area) == pic.size[0]:
                 minimum_area = area
                 self.min_dimensions = pic.size
         self.resize()
@@ -111,10 +113,23 @@ class ImageProcessor():
 
         collage = Image.new('RGB', (width, height))
 
+    #! When the min_dimension columns is x smaller than the rows, it leads to x tall black lines between rows in the collage
+
+        used_images = []
         for row in range(rows):
             for col in range(columns):
                 #TODO here might be the duplication issue
-                collage.paste(im=self.images[self.colors.index(str(hex(image_board.get(row,col))))], box=(col*ind_height,row*ind_width))
+
+                # Need to ensure we aren't duplicating images with the same dominant colors
+                for ind, img in enumerate(self.images):
+                    # If the color matches and hasn't been used yet
+                    if (self.colors[ind] == str(hex(image_board.get(row,col))) and img not in used_images):
+                        # Add it and add it to the used image list
+                        collage.paste(im=img, box=(col*ind_height,row*ind_width))
+                        used_images.append(img)
+                        # Break out of the loop, otherwise we'd overlay some images 
+                        # if they have the same color and haven't been used yet
+                        break
 
         collage.save('./collage.jpeg')
 
