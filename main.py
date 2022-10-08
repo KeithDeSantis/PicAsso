@@ -17,8 +17,9 @@ if __name__ == "__main__":
     #for it in range(iterations):
     #    write_songs_to_json(50,it*50)
     #    save_images_from_json()
-    #write_songs_to_json(remainder,iterations*50)
-    #save_images_from_json()
+    #if(remainder > 0):
+    #   write_songs_to_json(remainder,iterations*50)
+    #   save_images_from_json()
 
     covers = os.listdir('images_main/')
     if ".DS_Store" in covers:
