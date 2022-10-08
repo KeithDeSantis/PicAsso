@@ -1,3 +1,4 @@
+from pickle import NONE
 from hillclimb import HillClimber
 from imageboard import ImageBoard
 import os
@@ -30,7 +31,8 @@ if __name__ == "__main__":
     # Get a bunch of random starting covers and pick the one that gives the best fitness
     for color in (imProc.colors):
         print("Color: " + str(color))
-        es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors]), imProc, color)
+        # If you want a specific rows and columns replace r and c here
+        es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors], r=None, c=None), imProc, color)
         boards.append(es.sort())
     fitnesses = [b.calculate_fitness() for b in boards]
     min_index = fitnesses.index(max(fitnesses))
@@ -46,7 +48,9 @@ if __name__ == "__main__":
     name_grid = [] # list in order of rows 0, 1, 2 but as one list
     for r_index, row in enumerate(grid):
         for c_index, color in enumerate(row):
-            name_grid.append(imProc.get_image_name_from_color(hex(color)))
+            # here we duplicate images unless we pass in a blacklist of images we've used already
+            # TODO still duplicating some specific covers for some reason
+            name_grid.append(imProc.get_image_name_from_color(hex(color), blacklist=name_grid))
     imProc.rearrange(name_grid)
     imProc.resize()
     imProc.create_collage(best_board)

@@ -71,8 +71,13 @@ class ImageProcessor():
             print(str(self.colors[-1]) + " : " + path)
         return self.colors
 
-    def get_image_name_from_color(self, color):
-        return self.image_paths[self.colors.index(color)]
+    ''' Get the image name from the color. If the image name is in the blacklist, skip it '''
+    def get_image_name_from_color(self, color, blacklist=[]):
+
+        for index in range(len(self.image_paths)):
+            if(self.image_paths[index] not in blacklist):
+                if(self.colors[index] == color):
+                    return self.image_paths[index]
 
     def get_color_from_image(self, image):
         return self.colors[self.image.index(image)]
