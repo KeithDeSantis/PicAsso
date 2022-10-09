@@ -27,7 +27,7 @@ if __name__ == "__main__":
     covers = os.listdir('images_main/')
     if ".DS_Store" in covers:
         covers.remove('.DS_Store')
-    #covers = random.sample(covers, SAMPLE_SIZE) # used for sampling from larger list
+    covers = random.sample(covers, SAMPLE_SIZE) # used for sampling from larger list
     imProc = ImageProcessor(covers)
     imProc.get_all_colors()
 
