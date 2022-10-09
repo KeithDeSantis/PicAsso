@@ -5,13 +5,13 @@ import copy
 
 class HillClimber:
 
-    def __init__(self, image_board, time_to_run):
+    def __init__(self, image_board, time_to_run=60):
         self.time_to_run = time_to_run
         self.image_board = image_board
         self.best_board = copy.deepcopy(self.image_board)
 
     ''' Hill Climb and Find a Best Board '''
-    def run(self):
+    def run(self, touchup_mode=False):
         start = time.time()
         best_fitness = self.best_board.fitness
         possible_pairings = self.get_all_pairings()
@@ -45,6 +45,8 @@ class HillClimber:
                     print(f"Local Maximum #{number_new_maxes} Found of fitness {self.image_board.fitness} > {old_max_fitness}, resetting...")
                     old_max_fitness = self.image_board.fitness
                     number_new_maxes += 1
+                    # in touchup mode we only go once
+                    if(touchup_mode): return self.best_board
                 self.image_board.shuffle()
                 local_max_flag = False # reset
   

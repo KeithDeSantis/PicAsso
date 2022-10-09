@@ -40,6 +40,9 @@ if __name__ == "__main__":
     fitnesses = [b.calculate_fitness() for b in boards]
     min_index = fitnesses.index(max(fitnesses))
     best_board = boards[min_index]
+    # Run through hillclimbing in touchup_mode to help optimize the board
+    hillClimb = HillClimber(best_board, 99999)
+    best_board = hillClimb.run(touchup_mode=True)
 
    #! Hill Climbing
     #runtime = sys.argv[1]
