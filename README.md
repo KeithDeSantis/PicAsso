@@ -17,4 +17,4 @@ Has capabilites to download album art of all of a user's liked songs, given a `c
 * `REDIRECT_URI`: The redirect uri setup for the app on the Spotify for Developers page
 * `NUMBER_OF_LIKED_SONGS`: The number of liked songs for the given user
 * `SAMPLE_SIZE`: Size of sample taken from liked songs if you choose to uncomment the sampling line in `main.py`
-* `ROOMIE_LIST_ID`: A temporary variable used to store a playlist ID for in progress playlist compatibility
+* `PLAYLIST_ID`: A temporary variable used to store a playlist ID for in progress playlist compatibility. Currently broken.

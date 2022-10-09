@@ -17,11 +17,11 @@ if __name__ == "__main__":
 
     #for it in range(iterations):
     #    write_songs_to_json(50,it*50)
-    #    user_playlist_tracks_full(50,it*50, ROOMIE_LIST_ID) # used for playlist
+    #    user_playlist_tracks_full(50,it*50, PLAYLIST_ID) # used for playlist
     #    save_images_from_json()
     #if(remainder > 0):
-    #   write_songs_to_json(remainder,iterations*50)
-    #    user_playlist_tracks_full(remainder, iterations*50, ROOMIE_LIST_ID) # used for playlist
+    #    write_songs_to_json(remainder,iterations*50)
+    #    user_playlist_tracks_full(remainder, iterations*50, PLAYLIST_ID) # used for playlist
     #    save_images_from_json()
 
     covers = os.listdir('images_main/')
