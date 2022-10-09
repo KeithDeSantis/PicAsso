@@ -1,6 +1,6 @@
+from imaging.imageboard import find_shape
 from PIL import Image
 import os
-from imageboard import find_shape
 
 image_paths = os.listdir('images_main/')
 if ".DS_Store" in image_paths:

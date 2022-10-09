@@ -1,6 +1,6 @@
+import numpy as np
 import random
 import math
-import numpy as np
 
 NEIGHBORING_DIRECTIONS = [
     #(-1,-1), # Up Left 

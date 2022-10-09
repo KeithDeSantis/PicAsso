@@ -1,6 +1,6 @@
-from imageboard import *
-import copy
+from imaging.imageboard import *
 import random
+import copy
 import math
 
 # TODO noticed sometimes duplicating images...

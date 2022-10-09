@@ -1,12 +1,12 @@
 from __future__ import print_function
-import binascii
+from imaging.imageboard import *
 from PIL import Image
-import numpy as np
-import scipy
-import scipy.misc
 import scipy.cluster
+import numpy as np
+import scipy.misc
+import binascii
 import warnings
-from imageboard import *
+import scipy
 import math
 
 #! Class that handles image processing and maintains parallel lists of:

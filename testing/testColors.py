@@ -1,6 +1,6 @@
 # Used to print the dominant colors cause terminal is being stupid
 import sys
-f = open('./rgb_values.txt', 'r')
+f = open('./resources/rgb_values.txt', 'r')
 
 colors = f.readlines()
 
