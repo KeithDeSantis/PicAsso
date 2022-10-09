@@ -17,10 +17,12 @@ if __name__ == "__main__":
 
     #for it in range(iterations):
     #    write_songs_to_json(50,it*50)
+    #    user_playlist_tracks_full(50,it*50, ROOMIE_LIST_ID) # used for playlist
     #    save_images_from_json()
     #if(remainder > 0):
     #   write_songs_to_json(remainder,iterations*50)
-    #   save_images_from_json()
+    #    user_playlist_tracks_full(remainder, iterations*50, ROOMIE_LIST_ID) # used for playlist
+    #    save_images_from_json()
 
     covers = os.listdir('images_main/')
     if ".DS_Store" in covers:
@@ -41,7 +43,7 @@ if __name__ == "__main__":
     min_index = fitnesses.index(max(fitnesses))
     best_board = boards[min_index]
     # Run through hillclimbing in touchup_mode to help optimize the board
-    hillClimb = HillClimber(best_board, 99999)
+    hillClimb = HillClimber(best_board, 600)
     best_board = hillClimb.run(touchup_mode=True)
 
    #! Hill Climbing

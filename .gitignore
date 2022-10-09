@@ -5,6 +5,7 @@ saved_collages
 songs.json
 config.py
 images_main
-images_Backup_Picasso
+images_alternate
 .cache
 collage.jpeg
+count_files.py

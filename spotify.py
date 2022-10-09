@@ -34,3 +34,12 @@ def save_images_from_json():
         name = url.split('/')[-1]
         with open(f'images_main/{name}.jpg', 'wb') as handler:
             handler.write(img_data)
+
+
+def user_playlist_tracks_full(limit, offset, playlist_id=None, fields=None, market=None):
+
+    # first run through also retrieves total no of songs in library
+    response = SP.user_playlist_tracks(user=SP.current_user(), playlist_id=playlist_id, fields=fields, limit=limit, offset=offset, market=market)
+    s = open('songs.json', 'w')
+    json_object = json.dumps(response,indent=4)
+    s.write(json_object)
