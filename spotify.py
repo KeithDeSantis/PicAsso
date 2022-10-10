@@ -72,7 +72,8 @@ if __name__ == "__main__":
 
     # Clear old images
     for img in os.listdir('./images_main'):
-        os.remove('./images_main/' + img)
+        if(img != '.gitignore'):
+            os.remove('./images_main/' + img)
 
     playlist_args = ['P', 'PLAY', 'PLAYLIST']
 
