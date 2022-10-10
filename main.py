@@ -11,6 +11,7 @@ import os
 if __name__ == "__main__":
 
     covers = os.listdir('images_main/')
+    covers.remove('.gitignore')
     if ".DS_Store" in covers:
         covers.remove('.DS_Store')
     if(len(covers) < 4): print(f'{FAIL}Please ensure images are loaded into /images_main directory. This can be done by running spotify.py.{ENDC}')
