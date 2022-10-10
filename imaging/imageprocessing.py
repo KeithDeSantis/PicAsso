@@ -144,6 +144,8 @@ class ImageProcessor():
     ''' Make the reference picture with small versions of self.images as pixels '''
     def pic_from_reference(self, reference_picture):
 
+        print("Generating collage from reference...")
+
         reference = Image.open(reference_picture)
         #Tuple of width and height
         size = reference.size
