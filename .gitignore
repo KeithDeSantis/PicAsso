@@ -7,4 +7,9 @@ config.py
 images_alternate
 .cache
 collage.jpeg
+collage.jpg
 count_files.py
+reference_picture.jpg
+reference_picture.jpeg
+pixeled.jpeg
+pixeled.jpg

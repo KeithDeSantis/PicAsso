@@ -8,6 +8,9 @@ import binascii
 import warnings
 import scipy
 import math
+import os
+
+REFERENCE_IMG_DIMENSION = 25
 
 #! Class that handles image processing and maintains parallel lists of:
 #! image paths
@@ -23,6 +26,8 @@ class ImageProcessor():
         # Get all images as objects
         self.images = [Image.open("images_main/" + impath) for impath in image_paths]
         self.colors = []
+        # TODO eventually improve this, for now dict is only for reference imaging
+        self.img_color_dict = {}
 
         # Resize all images
         self.min_dimensions = 0,0
@@ -68,6 +73,9 @@ class ImageProcessor():
             print("Determining dominant color of image: " + path + "...")
             try:
                 self.colors.append(self.get_main_color(image))
+                # Add color:image pair to dictionary
+                    # TODO maybe resize the images to be smaller or bigger...
+                self.img_color_dict[self.colors[-1]] = image.resize((REFERENCE_IMG_DIMENSION,REFERENCE_IMG_DIMENSION))
             except:
                 print("Image sized poorly...")
             print(str(self.colors[-1]) + " : " + path)
@@ -135,7 +143,43 @@ class ImageProcessor():
 
     ''' Make the reference picture with small versions of self.images as pixels '''
     def pic_from_reference(self, reference_picture):
-        pass
+
+        reference = Image.open(reference_picture)
+        #Tuple of width and height
+        size = reference.size
+        width = size[0]
+        height = size[1]
+
+        rgb_pixels = reference.load()
+        pixels = []
+        for x in range(width):
+            for y in range(height):
+                rgb = rgb_pixels[x,y]
+                pixels.append(hex(int(f'0x{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}', 16)))
+
+        new_image = Image.new('RGB', (width*REFERENCE_IMG_DIMENSION, height*REFERENCE_IMG_DIMENSION))
+
+        pixel_number = 0
+        for x in range(width):
+            for y in range(height):
+                #TODO put the closest album cover in that spot
+                new_image.paste(im=self.img_color_dict[self.get_closest_color(pixels[pixel_number])], box=(x*REFERENCE_IMG_DIMENSION,y*REFERENCE_IMG_DIMENSION))
+                pixel_number += 1
+        
+        new_image.save('./pixeled.jpeg')
+
+    ''' Get the closest color to the given color from all the image colors '''
+    def get_closest_color(self, pixel_color):
+
+        closest_color = None
+        smallest_difference = 9999999
+        for color in self.img_color_dict.keys():
+            difference = abs(int(pixel_color,16) - int(color,16))
+            if difference < smallest_difference:
+                smallest_difference = difference
+                closest_color = color
+        
+        return closest_color
 
 
 
@@ -165,20 +209,3 @@ def write_rgb_values(covers, width, imProc):
         rgb = hex_to_rgb(color)
         f.write(str(rgb[0]) + '\t' + str(rgb[1]) + '\t' + str(rgb[2]) + '\n')
         counter += 1
-
-if __name__ == "__main__":
-    
-    
-    '''
-    covers = os.listdir('images_main/')
-    covers.remove('.DS_Store')
-    imProc = ImageProcessor(covers)
-    f = open("./rgb_values.txt", 'w')
-    f.write('')
-    f.close()
-    for color in imProc.get_all_colors():
-        rgb = hex_to_rgb(color)
-        f = open("./rgb_values.txt", 'a')
-        f.write(str(rgb[0]) + '\t' + str(rgb[1]) + '\t' + str(rgb[2]) + '\n')
-    '''
-    pass
