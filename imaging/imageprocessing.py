@@ -133,6 +133,12 @@ class ImageProcessor():
 
         collage.save('./collage.jpeg')
 
+    ''' Make the reference picture with small versions of self.images as pixels '''
+    def pic_from_reference(self, reference_picture):
+        pass
+
+
+
 
 def hex_to_rgb(value):
     value = value.lstrip('0x')
