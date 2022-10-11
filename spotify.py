@@ -106,8 +106,14 @@ if __name__ == "__main__":
         iterations = number_songs//50
         remainder = number_songs%50
         for it in range(iterations):
-            write_songs_to_json(50,it*50)
-            save_images_from_json()
+            try:
+                write_songs_to_json(50,it*50)
+                save_images_from_json()
+            except:
+                pass
         if(remainder > 0):
-            write_songs_to_json(remainder,iterations*50)
-            save_images_from_json()
+            try:
+                write_songs_to_json(remainder,iterations*50)
+                save_images_from_json()
+            except:
+                pass
