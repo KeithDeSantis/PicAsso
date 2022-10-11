@@ -29,8 +29,10 @@ def save_images_from_json():
     image_urls = []
 
     for song in songs:
-        image_urls.append(song['track']['album']['images'][1]['url']) # gets the 300x300 url
-
+        try:
+            image_urls.append(song['track']['album']['images'][1]['url']) # gets the 300x300 url
+        except:
+            pass
 
     for url in image_urls:
         img_data = requests.get(url).content
@@ -85,8 +87,11 @@ if __name__ == "__main__":
                 iterations = number_songs//50
                 remainder = number_songs%50
                 for it in range(iterations):
-                    user_playlist_tracks_full_to_json(50,it*50, sys.argv[2])
-                    save_images_from_json()
+                    try:
+                        user_playlist_tracks_full_to_json(50,it*50, sys.argv[2])
+                        save_images_from_json()
+                    except:
+                        pass
                 if(remainder > 0):
                     user_playlist_tracks_full_to_json(remainder, iterations*50, sys.argv[2])
                     save_images_from_json()

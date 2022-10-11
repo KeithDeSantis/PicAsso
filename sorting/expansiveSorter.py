@@ -1,4 +1,5 @@
 from imaging.imageboard import *
+from imaging.imageprocessing import *
 import random
 import copy
 import math
@@ -66,24 +67,13 @@ class ExpansiveSorter:
     ''' Find the closest color, and return it '''
     #! DOES NOT REMOVE IT FROM UNUSED_COLORS
     def next_closest(self, current_coords):
- 
-        '''
-        count = 0
-        for row in range(self.rows):
-            for col in range(self.columns):
-                if (self.sorted_board.get(row,col) == 99999999):
-                    count += 1
-        print(count==len(self.unused_colors))
-        print('Number unfilled squares: ' + str(count))
-        print('Number unused colors: ' + str(len(self.unused_colors)))
-        '''
 
         # Get the color at the current space
         current_color = self.sorted_board.get([current_coords[0]], [current_coords[1]])
         # Parallel list whose minimum is the closest value to current color
         abs_value_list = []
         for c in self.unused_colors:
-            abs_value_list.append(abs(current_color - c))
+            abs_value_list.append(sum_rgb_difference(hex_to_rgb(hex(current_color.item())), hex_to_rgb(hex(c)))) #abs(current_color - c))
         
         minimum = min(abs_value_list)
         index_of_closest = abs_value_list.index(minimum)

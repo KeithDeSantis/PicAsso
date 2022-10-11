@@ -1,15 +1,16 @@
 import numpy as np
 import random
 import math
+from imaging.imageprocessing import *
 
 NEIGHBORING_DIRECTIONS = [
-    #(-1,-1), # Up Left 
+    (-1,-1), # Up Left 
     (-1,0), # Up 
-    #(-1,1), # Up Right
+    (-1,1), # Up Right
     (0,-1), # Left
     (0,1), # Right
-    #(1,-1), # Down Left
-    #(1,1), # Down Right
+    (1,-1), # Down Left
+    (1,1), # Down Right
     (1,0) # Down
     ]
 
@@ -41,11 +42,13 @@ def neighbor_based_fitness(image_board):
                 try:
                     neighbor = image_board.get(row_num + direction[0], col_num + direction[1])
                     num_neighbors += 1
-                    cell_score += abs(current_cell - neighbor)
+                    cell_score += sum_rgb_difference(hex_to_rgb(current_cell), hex_to_rgb(neighbor)) # abs(current_cell - neighbor)
                 except:
                     pass
             score += (cell_score/num_neighbors)
 
+    if(score == 0):
+        return 999999999
     return 1/score
 
 ''' Move that swaps one color for another '''

@@ -10,7 +10,7 @@ import scipy
 import math
 import os
 
-REFERENCE_IMG_DIMENSION = 25
+REFERENCE_IMG_DIMENSION = 50
 
 #! Class that handles image processing and maintains parallel lists of:
 #! image paths
@@ -173,21 +173,28 @@ class ImageProcessor():
     ''' Get the closest color to the given color from all the image colors '''
     def get_closest_color(self, pixel_color):
 
+        rgb = hex_to_rgb(pixel_color)
         closest_color = None
-        smallest_difference = 9999999
+        smallest_difference_sum = 99999999
         for color in self.img_color_dict.keys():
-            difference = abs(int(pixel_color,16) - int(color,16))
-            if difference < smallest_difference:
-                smallest_difference = difference
+            difference = sum_rgb_difference(rgb, hex_to_rgb(color))
+            if difference < smallest_difference_sum:
+                smallest_difference_sum = difference
                 closest_color = color
         
         return closest_color
 
+''' Get the sum of the differences of each corresponding color of two rgb tuples '''
+# TODO test squaring each individually before summing
+def sum_rgb_difference(rgb_tuple1, rgb_tuple2):
+    return abs(rgb_tuple1[0]-rgb_tuple2[0]) + abs(rgb_tuple1[1]-rgb_tuple2[1]) + abs(rgb_tuple1[2]-rgb_tuple2[2])
 
-
-
+''' Turns hex to rgb 3 tuple '''
 def hex_to_rgb(value):
     value = value.lstrip('0x')
+    if (len(value) < 6):
+        # add leading zeros
+        value = '0'*(6-len(value)) + value
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
