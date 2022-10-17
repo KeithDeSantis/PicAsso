@@ -17,7 +17,7 @@ if __name__ == "__main__":
     if(len(covers) < 4): print(f'{FAIL}Please ensure images are loaded into /images_main directory. This can be done by running spotify.py.{ENDC}')
 
     # Used for sampling from larger list, uncomment for random sampling and set SAMPLE_SIZE in config.py
-    covers = random.sample(covers, SAMPLE_SIZE)
+    #covers = random.sample(covers, SAMPLE_SIZE)
     
     imProc = ImageProcessor(covers)
     imProc.get_all_colors()
@@ -29,17 +29,15 @@ if __name__ == "__main__":
         for color in (imProc.colors):
             print("Testing with starting color: " + str(color))
             # If you want a specific rows and columns replace r and c here
-            es = ExpansiveSorter(ImageBoard([int(x, base=16) for x in imProc.colors], r=ROWS, c=COLUMNS), imProc, color)
+            es = ExpansiveSorter(ImageBoard(imProc.colors, r=ROWS, c=COLUMNS), imProc, color)
             boards.append(es.sort())
         fitnesses = [b.calculate_fitness() for b in boards]
         min_index = fitnesses.index(max(fitnesses))
         best_board = boards[min_index]
-
         # Run through hillclimbing in touchup_mode to help optimize the board
         print("Touching up with hillclimbing...")
         hillClimb = HillClimber(best_board, 60)
         best_board = hillClimb.run(touchup_mode=True)
-
     # If we specify hill climbing
     elif len(sys.argv) >= 2:
 
@@ -52,7 +50,7 @@ if __name__ == "__main__":
             except:
                 print(f'{FAIL}Please provide a number of seconds to run for as an argument.{ENDC}')
                 exit()
-            hillClimb = HillClimber(ImageBoard([int(x, base=16) for x in imProc.colors]), runtime)
+            hillClimb = HillClimber(ImageBoard(imProc.colors), runtime)
             best_board = hillClimb.run()
         else:
             print(f"{FAIL}Unexpected argument: {sys.argv[1]}{ENDC}")
@@ -64,10 +62,10 @@ if __name__ == "__main__":
 
     grid = best_board.board
     name_grid = [] # list in order of rows 0, 1, 2 but as one list
-    for r_index, row in enumerate(grid):
-        for c_index, color in enumerate(row):
+    for row in grid:
+        for color in row:
             # here we duplicate images unless we pass in a blacklist of images we've used already
-            name_grid.append(imProc.get_image_name_from_color(hex(color), blacklist=name_grid))
+            name_grid.append(imProc.get_image_name_from_color(color, blacklist=name_grid))
     imProc.rearrange(name_grid)
     imProc.resize()
     print(f"{OKCYAN}Rows: {str(best_board.rows)}\nColumns: {str(best_board.columns)}{ENDC}")

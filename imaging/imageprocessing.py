@@ -1,6 +1,7 @@
 from __future__ import print_function
 from imaging.imageboard import *
 from PIL import Image
+from resources.textColors import *
 import scipy.cluster
 import numpy as np
 import scipy.misc
@@ -75,7 +76,7 @@ class ImageProcessor():
         colour = binascii.hexlify(bytearray(int(c)
                                   for c in peak)).decode('ascii')
         str_dom_color = "0x" + colour
-        main_color = hex(int(str_dom_color, 16))
+        main_color = hex_to_rgb(hex(int(str_dom_color, 16)))
         return main_color
 
     #! Depreciated
@@ -114,34 +115,38 @@ class ImageProcessor():
     def get_color_per_image(self, image):
         thread_id = threading.get_native_id()
         path = self.image_paths[self.images.index(image)]
-        print(f"THREAD {thread_id}: Determining dominant color of image: {path} ...")
+        print(f"{OKGREEN}THREAD {thread_id}:{ENDC} Determining dominant color of image: {path} ...")
         try:
                 clr = self.get_main_color(image)
                 self.colors.append(clr)
                 # Add color:image pair to dictionary
                 self.img_color_dict[clr] = image.resize(
                     (REFERENCE_IMG_DIMENSION, REFERENCE_IMG_DIMENSION))
-                print(f"THREAD {thread_id}: {clr}: {path}")
+                print(f"{OKGREEN}THREAD {thread_id}:{ENDC} {clr}: {path}")
         except:
-                print(f"THREAD {thread_id}: Image sized poorly...")
+                print(f"{FAIL}THREAD {thread_id}:{ENDC} Image sized poorly...")
 
     ''' Get the image name from the color. If the image name is in the blacklist, skip it '''
     def get_image_name_from_color(self, color, blacklist=[]):
 
         for index in range(len(self.image_paths)):
             if (self.image_paths[index] not in blacklist):
-                if (self.colors[index] == color):
+                #print(f'SelfRED: {self.colors[index][RED]}\nColorRED: {color[RED]}\nSelfGREEN: {self.colors[index][GREEN]}\nColorGREEN: {color[GREEN]}\nSelfBLUE: {self.colors[index][BLUE]}\nColorBLUE: {color[BLUE]}')
+                if (self.colors[index][RED] == color[RED] and self.colors[index][GREEN] == color[GREEN] and self.colors[index][BLUE] == color[BLUE]):
                     return self.image_paths[index]
+        return 'balls'
+
 
     def get_color_from_image(self, image):
         return self.colors[self.image.index(image)]
 
-    ''' Get the RGB values of all colors (as tuples)'''
+    ''' DEPRECIATED Get the RGB values of all colors (as tuples)
     def get_rgbs(self):
         rgbs = []
         for color in self.colors:
             rgbs.append(hex_to_rgb(color))
         return rgbs
+    '''
 
     ''' Rearrange the color and name arrays by a new name array order '''
     def rearrange(self, new_image_order):
@@ -176,7 +181,7 @@ class ImageProcessor():
                 # Need to ensure we aren't duplicating images with the same dominant colors
                 for ind, img in enumerate(self.images):
                     # If the color matches and hasn't been used yet
-                    if (self.colors[ind] == str(hex(image_board.get(row, col))) and img not in used_images):
+                    if (rgbs_equal(self.colors[ind], image_board.get(row, col)) and img not in used_images):
                         # Add it and add it to the used image list
                         collage.paste(im=img, box=(
                             col*ind_height, row*ind_width))
@@ -188,7 +193,6 @@ class ImageProcessor():
         collage.save('./collage.jpeg')
 
     ''' Make the reference picture with small versions of self.images as pixels '''
-
     def pic_from_reference(self, reference_picture):
 
         print("Generating collage from reference...")
@@ -204,8 +208,8 @@ class ImageProcessor():
         for x in range(width):
             for y in range(height):
                 rgb = rgb_pixels[x, y]
-                pixels.append(
-                    hex(int(f'0x{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}', 16)))
+                pixels.append((rgb[RED], rgb[GREEN], rgb[BLUE]))
+                    #TODO old method of getting hex hex(int(f'0x{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}', 16)))
 
         new_image = Image.new(
             'RGB', (width*REFERENCE_IMG_DIMENSION, height*REFERENCE_IMG_DIMENSION))
@@ -224,11 +228,10 @@ class ImageProcessor():
 
     def get_closest_color(self, pixel_color):
 
-        rgb = hex_to_rgb(pixel_color)
         closest_color = None
         smallest_difference_sum = 99999999
         for color in self.img_color_dict.keys():
-            difference = sum_rgb_difference(rgb, hex_to_rgb(color))
+            difference = sum_rgb_difference(pixel_color, color)
             if difference < smallest_difference_sum:
                 smallest_difference_sum = difference
                 closest_color = color
@@ -238,15 +241,11 @@ class ImageProcessor():
 
 ''' Get the sum of the differences of each corresponding color of two rgb tuples '''
 # TODO test squaring each individually before summing
-
-
 def sum_rgb_difference(rgb_tuple1, rgb_tuple2):
-    return abs(rgb_tuple1[0]-rgb_tuple2[0]) + abs(rgb_tuple1[1]-rgb_tuple2[1]) + abs(rgb_tuple1[2]-rgb_tuple2[2])
+    return abs(rgb_tuple1[RED]-rgb_tuple2[RED]) + abs(rgb_tuple1[GREEN]-rgb_tuple2[GREEN]) + abs(rgb_tuple1[BLUE]-rgb_tuple2[BLUE])
 
 
 ''' Turns hex to rgb 3 tuple '''
-
-
 def hex_to_rgb(value):
     value = value.lstrip('0x')
     if (len(value) < 6):
@@ -257,8 +256,6 @@ def hex_to_rgb(value):
 
 
 ''' Write RGB values to file'''
-
-
 def write_rgb_values(covers, width, imProc):
     # Get the covers in a list for ImageProcessor
     list_covers = []
@@ -275,6 +272,10 @@ def write_rgb_values(covers, width, imProc):
         if (counter >= width):
             f.write('>\n')  # mark the end of a row
             counter = 0
-        rgb = hex_to_rgb(color)
-        f.write(str(rgb[0]) + '\t' + str(rgb[1]) + '\t' + str(rgb[2]) + '\n')
+        rgb = color
+        f.write(str(rgb[RED]) + '\t' + str(rgb[GREEN]) + '\t' + str(rgb[BLUE]) + '\n')
         counter += 1
+
+''' Helper to check that every value in 2 rgb tuples are equal '''
+def rgbs_equal(rgb_tuple1, rgb_tuple2):
+    return rgb_tuple1[RED] == rgb_tuple2[RED] and rgb_tuple1[GREEN] and rgb_tuple2[GREEN] and rgb_tuple1[BLUE] == rgb_tuple2[BLUE]

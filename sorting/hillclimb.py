@@ -20,7 +20,6 @@ class HillClimber:
         # Used for print outs
         old_max_fitness = self.image_board.fitness
         number_new_maxes = 0
-
         while time.time() - start < float(self.time_to_run):
 
             if(not local_max_flag):

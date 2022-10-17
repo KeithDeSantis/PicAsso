@@ -1,8 +1,10 @@
+from imp import init_builtin
 import numpy as np
 import random
 import math
 from imaging.imageprocessing import *
 from constants import *
+import copy
 
 NEIGHBORING_DIRECTIONS = [
     (-1,-1), # Up Left 
@@ -43,7 +45,7 @@ def neighbor_based_fitness(image_board):
                 try:
                     neighbor = image_board.get(row_num + direction[0], col_num + direction[1])
                     num_neighbors += 1
-                    cell_score += sum_rgb_difference(hex_to_rgb(current_cell), hex_to_rgb(neighbor)) # abs(current_cell - neighbor)
+                    cell_score += sum_rgb_difference(current_cell, neighbor) # abs(current_cell - neighbor)
                 except:
                     pass
             score += (cell_score/num_neighbors)
@@ -54,16 +56,15 @@ def neighbor_based_fitness(image_board):
 
 ''' Move that swaps one color for another '''
 def move_normal(image_board, r1, c1, r2, c2):
-    el1 = image_board.get(r1, c1)
-    el2 = image_board.get(r2,c2)
+    el1 = copy.deepcopy(image_board.get(r1, c1))
+    el2 = copy.deepcopy(image_board.get(r2,c2))
     image_board.set(r1,c1,el2)
     image_board.set(r2,c2,el1)
-    return
 
 class ImageBoard:
 
     def __init__(self,
-                 initial_pool, # the initial pool of pictures TODO gonna leave these as just hex colors for now
+                 initial_pool, # the initial pool of pictures TODO gonna leave these as just rgb tuple colors for now
                  move_function=move_normal, # the function used for mutation
                  fitness_function=neighbor_based_fitness, # the function used to determine fitness
                  r=None,
@@ -79,7 +80,7 @@ class ImageBoard:
         else:
             self.rows = r
             self.columns = c
-        self.board = self.board.reshape(self.rows, self.columns)
+        self.board = self.board.reshape(self.rows, self.columns, 3) #this will work for getting np.array of my 3-tuples
         self.initial_pool = initial_pool
         self.move_function = move_function
         self.fitness_function = fitness_function
@@ -134,19 +135,6 @@ class ImageBoard:
     def __lt__(self, other):
         return self.fitness < other.fitness
 
-    ''' Overrides str()  '''
-    def __str__(self):
-
-        def get_color_escape(r, g, b):
-            return '\033[{};2;{};{};{}m\033[0m'.format(38, r, g, b)
-
-        string = ""
-        for row in self.board:
-            for item in row:
-                string += f'{get_color_escape(0xFF, 0x00, 0x00)} {str(hex(item))}'
-            string += "\n"
-        return string
-
     ''' Update the image board's board with the given board '''
     def supply_board(self, matrix):
         self.rows = len(matrix)
@@ -158,7 +146,3 @@ class ImageBoard:
         self.board = np.array(list_version).astype('int')
         np.random.shuffle(self.board)
         self.board = self.board.reshape(self.rows, self.columns)
-
-
-if __name__ == "__main__":
-    print("Hello World.")
