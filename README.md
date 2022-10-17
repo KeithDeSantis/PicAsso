@@ -46,7 +46,7 @@ ___
 
 PicAsso is intended to be used when downloading album art from one's Spotify liked songs and/or a Spotify playlist.
 
-If the set of images is not going to be downloaded from Spotify, they must simply be placed in the aforementioned `images_main` directory.
+If the set of images is not going to be downloaded from Spotify, they must simply be placed in the aforementioned `/images_main` directory.
 
 To download the images run:
 
