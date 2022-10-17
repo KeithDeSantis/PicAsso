@@ -4,7 +4,7 @@ A side-project I've been working on that organizes images by their dominant colo
 ___
 ## **<u>Running `PicAsso`</u>**
 
-To run PicAsso, fill the directory `images_main` with images to be sorted and create a `config.py` on in the same directory as this `README.md` file with the following constants:
+To run PicAsso, create a `config.py` on in the same directory as this `README.md` file with the following constants:
 
 * `CLIENT`: The client token of an application made through Spotify for Developers
 * `CLIENT_SECRET`: The corresponding secret token
@@ -13,7 +13,9 @@ To run PicAsso, fill the directory `images_main` with images to be sorted and cr
 * `ROWS`: Set to None by default but can be adjusted if a specific number of rows is desired.
 * `COLUMNS`: Set to None by default but can be adjusted if a specfic number of columns is desired.
 
-There are 2 different modes PicAsso can run in, each having it's own script.
+Fill the directory `images_main` with images to be sorted.
+
+There are 2 different modes PicAsso can run in, each having its own script.
 
 ### <u>Pixelizing a Reference</u>
 
