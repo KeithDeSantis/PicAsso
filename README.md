@@ -42,7 +42,7 @@ If you wish to run this mode using solely hill climbing, run:
 Where `hill_climbing_flag` is only set if you want to run using solely hill climbing for `runtime` number of seconds. The `hill_climbing_flag` can be any form of h, hill, hillclimb, or hillclimbing, regardless of case.
 
 ___
-## **Spotify Integration**
+## **<u>Spotify Integration</u>**
 
 PicAsso is intended to be used when downloading album art from one's Spotify liked songs and/or a Spotify playlist.
 
