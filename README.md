@@ -73,7 +73,7 @@ The comparisons of the images is done using each images dominant color. The domi
 
 In order to save time, the initial determining of image's dominant colors is done through threading, spanwing a unique thread for each image that determines its dominant color and save the RGB 3-tuple before terminating.
 ___
-## *<u>Dependencies</u>**
+## **<u>Dependencies</u>**
 
 PicAsso relies on the following dependecies:
 
