@@ -65,7 +65,7 @@ I tried multiple methods to sort the images into color clusters, mainly trying t
 * `Expansive Sorting with Hill Climbing Touch Ups`
 * `Genetic Algorithms` (no longer included)
 
-At the moment the code is configured to run Expansive Sorting as I was most please with those results. The original intention with the program was to create a collage of my favorite albums, but it can be used on any set of images.
+At the moment the code is configured to run Expansive Sorting as I was most pleased with those results. The original intention with the program was to create a collage of my favorite albums, but it can be used on any set of images.
 
 The comparisons of the images is done using each images dominant color. The dominant color is saved as an RGB 3-tuple and the "difference" between two images is defined as the sum of the differences of each distinct value in the two RGB 3-tuples:
 
