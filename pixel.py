@@ -13,8 +13,10 @@ if ".DS_Store" in covers:
 # Check that necessary files exist
 if (len(covers) < 4): 
     print(f'{FAIL}Please ensure images are loaded into /images_main directory. This can be done by running spotify.py.{ENDC}')
+    exit()
 if (not os.path.exists("reference_picture.jpeg")):
     print(f'{FAIL}Please ensure the file "reference_picture.jpeg" is present in the current directory to pixelize.{ENDC}')
+    exit()
 
 # Create the pixelized image
 reference_img = "reference_picture.jpeg"
