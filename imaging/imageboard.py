@@ -1,9 +1,8 @@
-from imp import init_builtin
+from imaging.imageprocessing import *
+from resources.constants import *
 import numpy as np
 import random
 import math
-from imaging.imageprocessing import *
-from constants import *
 import copy
 
 NEIGHBORING_DIRECTIONS = [

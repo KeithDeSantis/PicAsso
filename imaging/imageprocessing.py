@@ -1,18 +1,15 @@
-from __future__ import print_function
+from resources.constants import *
 from imaging.imageboard import *
-from PIL import Image
 from resources.textColors import *
+from PIL import Image
 import scipy.cluster
 import numpy as np
 import scipy.misc
-import binascii
+import threading
 import warnings
+import binascii
 import scipy
 import math
-import os
-import threading
-import ctypes
-from constants import *
 
 REFERENCE_IMG_DIMENSION = 50
 
@@ -115,14 +112,14 @@ class ImageProcessor():
     def get_color_per_image(self, image):
         thread_id = threading.get_native_id()
         path = self.image_paths[self.images.index(image)]
-        print(f"{OKGREEN}THREAD {thread_id}:{ENDC} Determining dominant color of image: {path} ...")
+        print(f"{OKGREEN}THREAD {thread_id}:{ENDC} Determining dominant color of image: {WARNING}{path}{ENDC} ...")
         try:
                 clr = self.get_main_color(image)
                 self.colors.append(clr)
                 # Add color:image pair to dictionary
                 self.img_color_dict[clr] = image.resize(
                     (REFERENCE_IMG_DIMENSION, REFERENCE_IMG_DIMENSION))
-                print(f"{OKGREEN}THREAD {thread_id}:{ENDC} {clr}: {path}")
+                print(f"{OKGREEN}THREAD {thread_id}:{ENDC} {OKCYAN}{clr}{ENDC}: {WARNING}{path}{ENDC}")
         except:
                 print(f"{FAIL}THREAD {thread_id}:{ENDC} Image sized poorly...")
 

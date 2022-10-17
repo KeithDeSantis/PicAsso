@@ -1,9 +1,8 @@
-from imaging.imageboard import *
 from imaging.imageprocessing import *
+from resources.constants import *
+from imaging.imageboard import *
 import random
 import copy
-import math
-from constants import *
 
 # TODO noticed sometimes duplicating images...
 
