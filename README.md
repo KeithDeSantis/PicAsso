@@ -67,11 +67,11 @@ I tried multiple methods to sort the images into color clusters, mainly trying t
 
 At the moment the code is configured to run Expansive Sorting as I was most pleased with those results. The original intention with the program was to create a collage of my favorite albums, but it can be used on any set of images.
 
-The comparisons of the images is done using each images dominant color. The dominant color is saved as an RGB 3-tuple and the "difference" between two images is defined as the sum of the differences of each distinct value in the two RGB 3-tuples:
+The comparisons of the image's is done using each images dominant color. The dominant color is saved as an RGB 3-tuple and the "difference" between two images is defined as the sum of the differences of each distinct value in the two RGB 3-tuples:
 
 `sum([abs(rgb1[color] - rgb2[color]) for color in rgb_tuple])`
 
-In order to save time, the initial determining of image's dominant colors is done through threading, spanwing a unique thread for each image that determines its dominant color and save the RGB 3-tuple before terminating.
+In order to save time, the initial determining of image's dominant colors is done through threading, spawning a unique thread for each image that determines its dominant color and save the RGB 3-tuple before terminating.
 ___
 ## **<u>Dependencies</u>**
 
@@ -82,7 +82,7 @@ PicAsso relies on the following dependecies:
 * `scipy.cluster`
 * `scipy.misc`
 * `scipy`
-* `spotifpy`
+* `spotipy`
 * `spotipy.oauth2`
 * `requests`
 * `json`
