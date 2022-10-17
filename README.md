@@ -9,7 +9,7 @@ To run PicAsso, create a `config.py` on in the same directory as this `README.md
 * `CLIENT`: The client token of an application made through Spotify for Developers
 * `CLIENT_SECRET`: The corresponding secret token
 * `REDIRECT_URI`: The redirect uri setup for the app on the Spotify for Developers page
-* `SAMPLE_SIZE`: Size of sample taken from liked songs if you choose to use the sampling line in `main.py`
+* `SAMPLE_SIZE`: Size of sample taken from liked songs if you choose to use the sampling line (line 26) in `collage.py`
 * `ROWS`: Set to None by default but can be adjusted if a specific number of rows is desired.
 * `COLUMNS`: Set to None by default but can be adjusted if a specfic number of columns is desired.
 
