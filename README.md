@@ -1,4 +1,4 @@
-# **<u>`PicAsso`</u>: `Picture-Assorting Assistant`**
+# **<u>`PicAsso:`</u> `Picture-Assorting Assistant`**
 
 A side-project I've been working on that loosely organize images by their dominant color, either into a collage, or into a given reference image, making each pixel of the reference out of an image from the provided set.
 ___
