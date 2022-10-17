@@ -36,6 +36,7 @@ if __name__ == "__main__":
         best_board = boards[min_index]
 
         # Run through hillclimbing in touchup_mode to help optimize the board
+        print("Touching up with hillclimbing...")
         hillClimb = HillClimber(best_board, 60)
         best_board = hillClimb.run(touchup_mode=True)
 

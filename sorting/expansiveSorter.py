@@ -3,6 +3,7 @@ from imaging.imageprocessing import *
 import random
 import copy
 import math
+from constants import *
 
 # TODO noticed sometimes duplicating images...
 

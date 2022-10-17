@@ -1,6 +1,7 @@
 import random
 import time
 import copy
+from constants import *
 
 
 class HillClimber:

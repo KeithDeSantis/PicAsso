@@ -2,6 +2,7 @@ import numpy as np
 import random
 import math
 from imaging.imageprocessing import *
+from constants import *
 
 NEIGHBORING_DIRECTIONS = [
     (-1,-1), # Up Left 
