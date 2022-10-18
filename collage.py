@@ -34,7 +34,7 @@ if (len(sys.argv) == 1):
     boards = []
     # Get a bunch of random starting covers and pick the one that gives the best fitness
     for color in (imProc.colors):
-        print("Testing with starting color: " + str(color))
+        print(f"Testing with starting color: {OKBLUE}{color}{ENDC}")
         # If you want a specific rows and columns replace r and c here
         es = ExpansiveSorter(ImageBoard(imProc.colors, r=ROWS, c=COLUMNS), imProc, color)
         boards.append(es.sort())
@@ -42,7 +42,7 @@ if (len(sys.argv) == 1):
     min_index = fitnesses.index(max(fitnesses))
     best_board = boards[min_index]
     # Run through hillclimbing in touchup_mode to help optimize the board
-    print("Touching up with hillclimbing...")
+    print(f"{WARNING}Touching up with hillclimbing...{ENDC}")
     hillClimb = HillClimber(best_board, 60)
     best_board = hillClimb.run(touchup_mode=True)
 # If we specify hill climbing
