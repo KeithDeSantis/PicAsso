@@ -29,7 +29,7 @@ def save_images_from_json():
 
     for song in songs:
         try:
-            image_urls.append(song['track']['album']['images'][1]['url']) # gets the 300x300 url
+            image_urls.append(song['track']['album']['images'][abs(DETAIL_LEVEL - 2)]['url']) # gets the url
         except:
             pass
 

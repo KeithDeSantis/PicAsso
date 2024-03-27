@@ -61,14 +61,14 @@ class ImageProcessor():
         ar = np.asarray(im)
         shape = ar.shape
         try:
-            ar = ar.reshape(scipy.product(shape[:2]), shape[2]).astype(float)
+            ar = ar.reshape(np.prod(shape[:2]), shape[2]).astype(float) 
         except:
             raise
         codes, dist = scipy.cluster.vq.kmeans(ar, NUM_CLUSTERS)
         vecs, dist = scipy.cluster.vq.vq(ar, codes)         # assign codes
-        counts, bins = scipy.histogram(vecs, len(codes))    # count occurrences
+        counts, bins = np.histogram(vecs, len(codes))    # count occurrences 
         # find most frequent
-        index_max = scipy.argmax(counts)
+        index_max = np.argmax(counts)
         peak = codes[index_max]
         colour = binascii.hexlify(bytearray(int(c)
                                   for c in peak)).decode('ascii')
@@ -120,8 +120,9 @@ class ImageProcessor():
                 self.img_color_dict[clr] = image.resize(
                     (REFERENCE_IMG_DIMENSION, REFERENCE_IMG_DIMENSION))
                 print(f"{OKGREEN}THREAD {thread_id}:{ENDC} {OKCYAN}{clr}{ENDC}: {WARNING}{path}{ENDC}")
-        except:
+        except Exception as e:
                 print(f"{FAIL}THREAD {thread_id}:{ENDC} Image sized poorly...")
+                print(e)
 
     ''' Get the image name from the color. If the image name is in the blacklist, skip it '''
     def get_image_name_from_color(self, color, blacklist=[]):
@@ -219,7 +220,7 @@ class ImageProcessor():
                     pixels[pixel_number])], box=(x*REFERENCE_IMG_DIMENSION, y*REFERENCE_IMG_DIMENSION))
                 pixel_number += 1
 
-        new_image.save('./pixeled.jpeg')
+        new_image.save('pixeled.png')
 
     ''' Get the closest color to the given color from all the image colors '''
 
