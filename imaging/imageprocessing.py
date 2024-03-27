@@ -11,7 +11,7 @@ import binascii
 import scipy
 import math
 
-REFERENCE_IMG_DIMENSION = 50
+REFERENCE_IMG_DIMENSION = 15
 
 #! Class that handles image processing and maintains parallel lists of:
 #! image paths

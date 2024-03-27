@@ -13,6 +13,7 @@ To run PicAsso, create a `config.py` on in the same directory as this `README.md
 * `ROWS`: Set to None by default but can be adjusted if a specific number of rows is desired.
 * `COLUMNS`: Set to None by default but can be adjusted if a specfic number of columns is desired.
 * `DETAIL_LEVEL`: Either 0, 1, or 2. Defines how detailed you want the final image to be. The higher the level the higher resolution each individual album covered grabbed by spotify.py will be. Set to 0 by default. 
+* `REFERENCE_IMG_DIMENSION`: The dimension (in pixels) that each pixel will be when executing the `pixel.py` script. Set to 15 by default. Increasing this will quickly increase costs of execution and final file size of the output png.
 
 Fill the directory `images_main` with images to be sorted.
 
