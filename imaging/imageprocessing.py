@@ -2,6 +2,7 @@ from resources.constants import *
 from imaging.imageboard import *
 from resources.textColors import *
 from PIL import Image
+from config import *
 import scipy.cluster
 import numpy as np
 import scipy.misc
@@ -11,7 +12,6 @@ import binascii
 import scipy
 import math
 
-REFERENCE_IMG_DIMENSION = 15
 
 #! Class that handles image processing and maintains parallel lists of:
 #! image paths
